@@ -18,6 +18,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
+
+        buildConfigField "String", "BLOCK_CHAIN_API_BASE_URL", "\"https://api.blockchain.info/charts/market-price\""
     }
     buildTypes {
         release {
@@ -74,6 +76,8 @@ dependencies {
     implementation squareDependencies.okhttp
     implementation squareDependencies.loggingInterceptor
     implementation squareDependencies.converterGson
+
+    implementation jakeWhartonDependencies.timber
 
     androidTestImplementation testDependencies.androidXTestCore
     androidTestImplementation testDependencies.androidXRunner

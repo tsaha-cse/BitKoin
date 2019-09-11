@@ -41,6 +41,12 @@ dependencies {
     implementation androidxDependencies.multidex
     implementation kotlinDependencies.stdLib
 
+    implementation daggerDependencies.main
+    kapt daggerDependencies.compiler
+    implementation daggerDependencies.android
+    kapt daggerDependencies.androidProcessor
+    implementation daggerDependencies.androidSupport
+
     implementation rxDependencies.main
     implementation rxDependencies.android
 
@@ -48,6 +54,14 @@ dependencies {
     implementation squareDependencies.okhttp
     implementation squareDependencies.loggingInterceptor
     implementation squareDependencies.converterGson
+
+    implementation androidxDependencies.appCompat
+    implementation androidxDependencies.coreKtx
+    implementation androidxDependencies.lifecycleExtensions
+    annotationProcessor androidxDependencies.lifecylceCompiler
+    implementation androidxDependencies.lifecycleViewmodel
+
+    implementation jakeWhartonDependencies.timber
 
     androidTestImplementation testDependencies.androidXJunit
 

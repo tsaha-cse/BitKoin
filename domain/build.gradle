@@ -48,6 +48,8 @@ dependencies {
     implementation squareDependencies.okhttp
     implementation squareDependencies.loggingInterceptor
 
+    implementation jakeWhartonDependencies.timber
+
     testImplementation testDependencies.junit
     testImplementation testDependencies.mockitoCore
     testImplementation testDependencies.mockitoKotlin
