@@ -44,9 +44,12 @@ dependencies {
     implementation kotlinDependencies.stdLib
 
     implementation squareDependencies.retrofit
+    implementation squareDependencies.retrofitRxAdapter
     implementation squareDependencies.converterGson
     implementation squareDependencies.okhttp
     implementation squareDependencies.loggingInterceptor
+
+    implementation daggerDependencies.main
 
     implementation jakeWhartonDependencies.timber
 

@@ -51,6 +51,7 @@ dependencies {
     implementation rxDependencies.android
 
     implementation squareDependencies.retrofit
+    implementation squareDependencies.retrofitRxAdapter
     implementation squareDependencies.okhttp
     implementation squareDependencies.loggingInterceptor
     implementation squareDependencies.converterGson

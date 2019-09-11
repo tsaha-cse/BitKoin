@@ -1,6 +1,6 @@
 package com.tushar.bitkoin.di
 
-import com.tushar.bitkoin.ui.GraphActivity
+import com.tushar.bitkoin.ui.BitCoinPriceGraphActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -8,5 +8,5 @@ import dagger.android.ContributesAndroidInjector
 abstract class ActivityBuildersModule {
 
     @ContributesAndroidInjector
-    abstract fun bindGraphActivity(): GraphActivity
+    abstract fun bindGraphActivity(): BitCoinPriceGraphActivity
 }

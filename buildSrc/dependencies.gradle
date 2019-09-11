@@ -51,6 +51,7 @@ project.ext {
     versions.okhttp = '3.12.0'
     squareDependencies = [
             retrofit          : "com.squareup.retrofit2:retrofit:$versions.retrofit",
+            retrofitRxAdapter : "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit",
             okhttp            : "com.squareup.okhttp3:okhttp:$versions.okhttp",
             loggingInterceptor: "com.squareup.okhttp3:logging-interceptor:$versions.okhttp",
             converterGson     : 'com.squareup.retrofit2:converter-gson:2.3.0'

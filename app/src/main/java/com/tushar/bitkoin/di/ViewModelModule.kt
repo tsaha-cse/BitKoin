@@ -2,7 +2,7 @@ package com.tushar.bitkoin.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.tushar.module.presentation.GraphViewModel
+import com.tushar.module.presentation.BitCoinPriceGraphViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -16,8 +16,8 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(GraphViewModel::class)
-    abstract fun bindGraphViewModel(graphViewModel: GraphViewModel): ViewModel
+    @ViewModelKey(BitCoinPriceGraphViewModel::class)
+    abstract fun bindGraphViewModel(bitCoinPriceGraphViewModel: BitCoinPriceGraphViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: BitKoinViewModelFactory): ViewModelProvider.Factory
