@@ -51,6 +51,9 @@ dependencies {
 
     implementation daggerDependencies.main
 
+    implementation rxDependencies.main
+    implementation rxDependencies.android
+
     implementation jakeWhartonDependencies.timber
 
     testImplementation testDependencies.junit

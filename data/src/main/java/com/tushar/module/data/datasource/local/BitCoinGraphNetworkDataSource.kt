@@ -1,4 +1,4 @@
-package com.tushar.module.data.datasource
+package com.tushar.module.data.datasource.local
 
 import com.tushar.module.data.api.BlockChainApi
 import com.tushar.module.data.model.BitCoinGraphInfo

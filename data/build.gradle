@@ -45,7 +45,7 @@ dependencies {
     implementation squareDependencies.converterGson
     implementation squareDependencies.okhttp
     implementation squareDependencies.loggingInterceptor
-
+    implementation rxDependencies.main
     implementation daggerDependencies.main
     implementation kotson
     implementation jakeWhartonDependencies.timber

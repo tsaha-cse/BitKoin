@@ -19,7 +19,7 @@ android {
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
 
-        buildConfigField "String", "BLOCK_CHAIN_API_BASE_URL", "\"https://api.blockchain.info/charts\""
+        buildConfigField "String", "BLOCK_CHAIN_API_BASE_URL", '"https://api.blockchain.info/charts/"'
     }
     buildTypes {
         release {

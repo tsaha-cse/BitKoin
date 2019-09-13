@@ -5,6 +5,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import java.util.concurrent.TimeUnit
 
 /**
@@ -22,6 +23,7 @@ inline fun <reified T> createWebService(
                 builder.addConverterFactory(it)
             }
         }
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .build().create(T::class.java)
 
 /**

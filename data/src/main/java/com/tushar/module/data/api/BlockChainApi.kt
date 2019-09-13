@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface BlockChainApi {
 
-    @GET("/market-price?format=json")
+    @GET("market-price?format=json")
     fun getGraphInfo(
         @Query("timespan") timeSpan: String
     ): Single<BitCoinGraphInfo>

@@ -1,4 +1,4 @@
-package com.tushar.module.data.datasource
+package com.tushar.module.data.datasource.remote
 
 import android.content.SharedPreferences
 import com.github.salomonbrys.kotson.fromJson
@@ -11,21 +11,21 @@ class BitCoinGraphSharedPreferenceDataStorage(
     private val gson: Gson
 ) : BitCoinGraphStorage {
 
-    override fun getPrice(timeSpan: String): Single<BitCoinGraphInfo> =
-        sharedPreferences.getString(GRAPH_INFO_KEY, null)?.let {
+    override fun getGraphInfo(timeSpan: String): Single<BitCoinGraphInfo> =
+        sharedPreferences.getString(BIT_COIN_GRAPH_INFO_KEY, null)?.let {
             val bitCoinGraphInfo: BitCoinGraphInfo = gson.fromJson(it)
             return Single.just(bitCoinGraphInfo)
         } ?: Single.error(BitCoinGraphInfoNotFoundException())
 
-    override fun savePrice(bitCoinGraphInfo: BitCoinGraphInfo) =
+    override fun saveGraphInfo(bitCoinGraphInfo: BitCoinGraphInfo) =
         sharedPreferences.edit()
-            .putString(GRAPH_INFO_KEY, gson.toJson(bitCoinGraphInfo))
+            .putString(BIT_COIN_GRAPH_INFO_KEY, gson.toJson(bitCoinGraphInfo))
             .apply()
 
     companion object {
-        private const val GRAPH_INFO_KEY = "graph_info_key"
+        private const val BIT_COIN_GRAPH_INFO_KEY = "bit_coin_graph_info_key"
     }
 }
 
 class BitCoinGraphInfoNotFoundException :
-    RuntimeException("No data founds in shared preference data storage")
+    RuntimeException("No bit coin data found in shared preference data storage")

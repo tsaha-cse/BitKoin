@@ -48,6 +48,7 @@ dependencies {
     implementation daggerDependencies.androidSupport
 
     implementation rxDependencies.main
+    implementation rxDependencies.kotlin
     implementation rxDependencies.android
 
     implementation squareDependencies.retrofit

@@ -25,9 +25,11 @@ project.ext {
     ]
 
     versions.rxJava = '2.2.10'
+    versions.rxKotlin = '2.4.0'
     versions.rxAndroid = '2.1.1'
     rxDependencies = [
             main   : "io.reactivex.rxjava2:rxjava:$versions.rxJava",
+            kotlin : "io.reactivex.rxjava2:rxkotlin:$versions.rxKotlin",
             android: "io.reactivex.rxjava2:rxandroid:$versions.rxAndroid"
     ]
 

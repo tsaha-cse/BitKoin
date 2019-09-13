@@ -8,10 +8,10 @@ import com.tushar.bitkoin.BuildConfig
 import com.tushar.bitkoin.R
 import com.tushar.module.data.api.BitCoinGraphInfoDeserializer
 import com.tushar.module.data.api.BlockChainApi
-import com.tushar.module.data.datasource.BitCoinGraphDataSource
-import com.tushar.module.data.datasource.BitCoinGraphNetworkDataSource
-import com.tushar.module.data.datasource.BitCoinGraphSharedPreferenceDataStorage
-import com.tushar.module.data.datasource.BitCoinGraphStorage
+import com.tushar.module.data.datasource.local.BitCoinGraphDataSource
+import com.tushar.module.data.datasource.local.BitCoinGraphNetworkDataSource
+import com.tushar.module.data.datasource.remote.BitCoinGraphSharedPreferenceDataStorage
+import com.tushar.module.data.datasource.remote.BitCoinGraphStorage
 import com.tushar.module.data.model.BitCoinGraphInfo
 import com.tushar.module.data.repository.BitCoinGraphRepository
 import com.tushar.module.data.repository.BitCoinGraphRepositoryImpl
@@ -68,7 +68,10 @@ object NetworkModule {
         sharedPreferences: SharedPreferences,
         gson: Gson
     ): BitCoinGraphStorage =
-        BitCoinGraphSharedPreferenceDataStorage(sharedPreferences, gson)
+        BitCoinGraphSharedPreferenceDataStorage(
+            sharedPreferences,
+            gson
+        )
 
     @JvmStatic
     @Provides
