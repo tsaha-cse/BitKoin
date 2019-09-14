@@ -21,12 +21,15 @@ class BitCoinGraphInfoDeserializer : JsonDeserializer<BitCoinGraphInfo> {
             val datePriceJsonArray: JsonArray? = jsonObject.get("values")?.asJsonArray
             datePriceJsonArray?.let { array ->
                 array.forEach { item ->
-                    val dateInUnix: Int = item.asJsonObject.get("x").asInt
+                    val dateInUnix: Int =
+                        item.asJsonObject.get("x")?.asInt ?: item.asJsonObject.get("date").asInt
                     datePriceList.add(
                         DatePrice(
                             date = dateInUnix,
-                            dateText = dateInUnix.toDateTimeText(),
-                            price = item.asJsonObject.get("y").asDouble
+                            dateText = item.asJsonObject.get("dateText")?.asString
+                                ?: dateInUnix.toDateTimeText(),
+                            price = item.asJsonObject.get("y")?.asDouble
+                                ?: item.asJsonObject.get("price").asDouble
                         )
                     )
                 }

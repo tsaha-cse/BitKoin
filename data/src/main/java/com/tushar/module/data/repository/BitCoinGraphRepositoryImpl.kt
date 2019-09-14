@@ -14,8 +14,8 @@ class BitCoinGraphRepositoryImpl(
         bitCoinGraphStorage.getGraphInfo(timeSpan)
             .onErrorResumeNext {
                 bitCoinGraphDataSource.getGraphInfo(timeSpan)
-            }
-            .doOnSuccess {
-                bitCoinGraphStorage.saveGraphInfo(it)
+                    .doOnSuccess {
+                        bitCoinGraphStorage.saveGraphInfo(it)
+                    }
             }
 }

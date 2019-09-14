@@ -12,10 +12,9 @@ class BitCoinGraphSharedPreferenceDataStorage(
 ) : BitCoinGraphStorage {
 
     override fun getGraphInfo(timeSpan: String): Single<BitCoinGraphInfo> =
-        sharedPreferences.getString(BIT_COIN_GRAPH_INFO_KEY, null)?.let {
-            val bitCoinGraphInfo: BitCoinGraphInfo = gson.fromJson(it)
-            return Single.just(bitCoinGraphInfo)
-        } ?: Single.error(BitCoinGraphInfoNotFoundException())
+        sharedPreferences.getString(BIT_COIN_GRAPH_INFO_KEY, null)?.let { string ->
+            return Single.just(gson.fromJson(string))
+        } ?: Single.error(BitCoinGraphSharedPreferenceStorageException())
 
     override fun saveGraphInfo(bitCoinGraphInfo: BitCoinGraphInfo) =
         sharedPreferences.edit()
@@ -27,5 +26,5 @@ class BitCoinGraphSharedPreferenceDataStorage(
     }
 }
 
-class BitCoinGraphInfoNotFoundException :
+class BitCoinGraphSharedPreferenceStorageException :
     RuntimeException("No bit coin data found in shared preference data storage")
