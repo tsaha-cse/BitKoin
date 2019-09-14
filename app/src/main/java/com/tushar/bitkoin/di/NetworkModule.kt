@@ -12,11 +12,12 @@ import com.tushar.module.data.datasource.local.BitCoinGraphDataSource
 import com.tushar.module.data.datasource.local.BitCoinGraphNetworkDataSource
 import com.tushar.module.data.datasource.remote.BitCoinGraphSharedPreferenceDataStorage
 import com.tushar.module.data.datasource.remote.BitCoinGraphStorage
-import com.tushar.module.data.model.BitCoinGraphInfo
+import com.tushar.module.data.model.BitCoinGraphModel
 import com.tushar.module.data.repository.BitCoinGraphRepository
 import com.tushar.module.data.repository.BitCoinGraphRepositoryImpl
 import com.tushar.module.data.util.createOkHttp
 import com.tushar.module.data.util.createWebService
+import com.tushar.module.data.util.NoConnectionInterceptor
 import dagger.Module
 import dagger.Provides
 import okhttp3.logging.HttpLoggingInterceptor
@@ -31,16 +32,26 @@ object NetworkModule {
     @Singleton
     fun provideGson(): Gson =
         GsonBuilder()
-            .registerTypeAdapter(BitCoinGraphInfo::class.java, BitCoinGraphInfoDeserializer())
+            .registerTypeAdapter(BitCoinGraphModel::class.java, BitCoinGraphInfoDeserializer())
             .create()
 
     @JvmStatic
     @Provides
     @Singleton
-    fun provideBlockChainApiService(gson: Gson): BlockChainApi =
+    fun provideNoConnectionInterceptor(context: Context): NoConnectionInterceptor =
+        NoConnectionInterceptor(context)
+
+    @JvmStatic
+    @Provides
+    @Singleton
+    fun provideBlockChainApiService(
+        gson: Gson,
+        noConnectionInterceptor: NoConnectionInterceptor
+    ): BlockChainApi =
         createWebService(
             BuildConfig.BLOCK_CHAIN_API_BASE_URL,
             createOkHttp(
+                interceptors = listOf(noConnectionInterceptor),
                 level =
                 if (BuildConfig.DEBUG)
                     HttpLoggingInterceptor.Level.BODY

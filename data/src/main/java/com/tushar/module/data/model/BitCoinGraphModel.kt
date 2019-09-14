@@ -1,11 +1,10 @@
 package com.tushar.module.data.model
 
-data class BitCoinGraphInfo(
+data class BitCoinGraphModel(
     val name: String,
     val unit: String,
     val period: String,
-    val values: List<DatePrice>,
-    val timeStamp: Long
+    val values: List<DatePrice>
 )
 
 data class DatePrice(

@@ -5,17 +5,17 @@ import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
-import com.tushar.module.data.model.BitCoinGraphInfo
+import com.tushar.module.data.model.BitCoinGraphModel
 import com.tushar.module.data.model.DatePrice
 import com.tushar.module.data.util.toDateTimeText
 import java.lang.reflect.Type
 
-class BitCoinGraphInfoDeserializer : JsonDeserializer<BitCoinGraphInfo> {
+class BitCoinGraphInfoDeserializer : JsonDeserializer<BitCoinGraphModel> {
     override fun deserialize(
         json: JsonElement?,
         typeOfT: Type?,
         context: JsonDeserializationContext?
-    ): BitCoinGraphInfo =
+    ): BitCoinGraphModel =
         json?.asJsonObject?.let { jsonObject ->
             val datePriceList: MutableList<DatePrice> = mutableListOf()
             val datePriceJsonArray: JsonArray? = jsonObject.get("values")?.asJsonArray
@@ -34,12 +34,11 @@ class BitCoinGraphInfoDeserializer : JsonDeserializer<BitCoinGraphInfo> {
                     )
                 }
             }
-            return BitCoinGraphInfo(
+            return BitCoinGraphModel(
                 name = jsonObject.get("name").asString ?: "",
                 unit = jsonObject.get("unit").asString ?: "",
                 period = jsonObject.get("period").asString ?: "",
-                values = datePriceList,
-                timeStamp = System.currentTimeMillis()
+                values = datePriceList
             )
         } ?: throw JsonParseException("Invalid JSON")
 }

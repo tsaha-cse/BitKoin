@@ -1,6 +1,6 @@
 package com.tushar.module.domain.usecase
 
-import com.tushar.module.data.model.BitCoinGraphInfo
+import com.tushar.module.data.repository.BitCoinGraphInfo
 import com.tushar.module.data.repository.BitCoinGraphRepository
 import com.tushar.module.domain.base.NullParamException
 import com.tushar.module.domain.base.ParamValidationException
@@ -31,9 +31,10 @@ class GetBitCoinGraphInfoUseCase
 }
 
 data class TimeSpan(val count: Int, val timeUnit: TimeUnit)
-enum class TimeUnit(val key: String) {
-    DAY("days"),
-    WEEK("weeks"),
-    MONTH("months"),
-    YEAR("years")
+
+sealed class TimeUnit(val key: String) {
+    object Day : TimeUnit("days")
+    object Week : TimeUnit("weeks")
+    object Months : TimeUnit("months")
+    object Year : TimeUnit("years")
 }

@@ -16,7 +16,7 @@ class BitCoinPriceGraphViewModel
     private val disposible: CompositeDisposable = CompositeDisposable()
 
     fun requestData() {
-        getBitCoinGraphInfoUseCase(TimeSpan(1, TimeUnit.YEAR))
+        getBitCoinGraphInfoUseCase(TimeSpan(1, TimeUnit.Year))
             .subscribe(
                 {
                     Timber.tag("GraphResult").d(it.toString())
