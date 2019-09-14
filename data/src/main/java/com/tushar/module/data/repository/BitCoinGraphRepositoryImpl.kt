@@ -16,26 +16,12 @@ class BitCoinGraphRepositoryImpl(
     private lateinit var dataSource: DataSource
 
     override fun getGraphInfo(timeSpan: String): Single<BitCoinGraphInfo> =
-        bitCoinGraphDataSource.getGraphInfo(timeSpan)
-            .doOnSuccess {
-                // save to local storage
-                bitCoinGraphStorage.saveGraphInfo(it).subscribe()
-                dataSource = DataSource.NetworkSource
-            }
+        requestToNetworkSource(timeSpan)
             .onErrorResumeNext { throwable ->
                 when (throwable) {
                     is NoConnectivityException, is NoInternetException -> {
-                        // request to local storage
-                        bitCoinGraphStorage.getGraphInfo(timeSpan)
-                            .doOnSuccess {
-                                dataSource = DataSource.LocalSource
-                            }
+                        requestToLocalStorage(timeSpan)
                     }
-
-                    is BitCoinGraphSharedPreferenceStorageException -> {
-                        Single.error(NoContentException())
-                    }
-
                     else -> {
                         Single.error(throwable)
                     }
@@ -44,11 +30,33 @@ class BitCoinGraphRepositoryImpl(
                 BitCoinGraphInfo(bitCoinGraphModel, dataSource)
             }
 
+
+    private fun requestToNetworkSource(timeSpan: String): Single<BitCoinGraphModel> =
+        bitCoinGraphDataSource.getGraphInfo(timeSpan)
+            .doOnSuccess {
+                // save to local storage
+                bitCoinGraphStorage.saveGraphInfo(it).subscribe()
+                dataSource = DataSource.Network
+            }
+
+    private fun requestToLocalStorage(timeSpan: String): Single<BitCoinGraphModel> =
+        bitCoinGraphStorage.getGraphInfo(timeSpan)
+            .doOnSuccess {
+                dataSource = DataSource.Local
+            }.onErrorResumeNext { throwable ->
+                when (throwable) {
+                    is BitCoinGraphSharedPreferenceStorageException -> {
+                        Single.error(NoContentException())
+                    }
+                    else -> Single.error(throwable)
+                }
+            }
+
 }
 
 sealed class DataSource {
-    object NetworkSource : DataSource()
-    object LocalSource : DataSource()
+    object Network : DataSource()
+    object Local : DataSource()
 }
 
 data class BitCoinGraphInfo(

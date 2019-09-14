@@ -2,7 +2,7 @@ package com.tushar.bitkoin.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.tushar.module.presentation.BitCoinPriceGraphViewModel
+import com.tushar.module.presentation.viewmodel.BitCoinPriceGraphViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

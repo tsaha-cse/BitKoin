@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">BitKoin</string>
+    <string name="bit_coin_price_activity_tool_bar_title">Bitcoin Market Price</string>
+    <string name="btn_retry">Retry</string>
 </resources>

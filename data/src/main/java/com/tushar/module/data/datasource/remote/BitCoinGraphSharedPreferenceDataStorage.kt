@@ -30,4 +30,4 @@ class BitCoinGraphSharedPreferenceDataStorage(
 }
 
 class BitCoinGraphSharedPreferenceStorageException :
-    RuntimeException("No bit coin data found in shared preference data storage")
+    RuntimeException("No bitcoin data found in shared preference data storage")
