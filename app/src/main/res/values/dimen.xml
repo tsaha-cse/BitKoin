@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="btn_time_span_top_margin">24dp</dimen>
+    <dimen name="btn_time_span_min_width">36dp</dimen>
+    <dimen name="chart_margin_vertical">8dp</dimen>
+</resources>

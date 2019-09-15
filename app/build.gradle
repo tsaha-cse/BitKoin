@@ -80,6 +80,8 @@ dependencies {
 
     implementation jakeWhartonDependencies.timber
 
+    implementation mPAndroidChart
+
     androidTestImplementation testDependencies.androidXTestCore
     androidTestImplementation testDependencies.androidXRunner
     androidTestImplementation testDependencies.androidXTestRule

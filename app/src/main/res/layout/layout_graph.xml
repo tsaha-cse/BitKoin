@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent=".7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/chart_margin_vertical"/>
+
+    <Button
+        android:id="@+id/btnTimeSpan1Week"
+        style="@style/FlatButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="@dimen/btn_time_span_min_width"
+        android:text="@string/btn_time_span_1_week"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnTimeSpan1Month"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chart"
+        app:layout_constraintVertical_bias="0.30" />
+
+    <Button
+        android:id="@+id/btnTimeSpan1Month"
+        style="@style/FlatButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="@dimen/btn_time_span_min_width"
+        android:text="@string/btn_time_span_1_month"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnTimeSpan6Month"
+        app:layout_constraintStart_toEndOf="@+id/btnTimeSpan1Week"
+        app:layout_constraintTop_toBottomOf="@+id/chart"
+        app:layout_constraintVertical_bias="0.30" />
+
+
+    <Button
+        android:id="@+id/btnTimeSpan6Month"
+        style="@style/FlatButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="@dimen/btn_time_span_min_width"
+        android:text="@string/btn_time_span_6_month"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnTimeSpan1Year"
+        app:layout_constraintStart_toEndOf="@+id/btnTimeSpan1Month"
+        app:layout_constraintTop_toBottomOf="@+id/chart"
+        app:layout_constraintVertical_bias="0.30" />
+
+    <Button
+        android:id="@+id/btnTimeSpan1Year"
+        style="@style/FlatButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="@dimen/btn_time_span_min_width"
+        android:text="@string/btn_time_span_1_year"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnTimeSpan6Month"
+        app:layout_constraintTop_toBottomOf="@+id/chart"
+        app:layout_constraintVertical_bias="0.30" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

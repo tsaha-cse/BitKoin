@@ -24,6 +24,31 @@ class BitCoinPriceGraphViewModel
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
+    fun loadBitCoinGraphModelOnLaunch() {
+        loadBitCoinGraphModel()
+    }
+
+    fun loadBitCoinGraphModelOnRefresh() {
+        loadBitCoinGraphModel()
+    }
+
+    fun onClickOneWeekTimeSpan() {
+        loadBitCoinGraphModel(TimeSpan(1, TimeUnit.Week))
+    }
+
+    fun onClickOneMonthTimeSpan() {
+        loadBitCoinGraphModel(TimeSpan(1, TimeUnit.Months))
+    }
+
+    fun onClickSixMonthTimeSpan() {
+        loadBitCoinGraphModel(TimeSpan(6, TimeUnit.Months))
+    }
+
+    fun onClickOneYearTimeSpan() {
+        loadBitCoinGraphModel(TimeSpan(1, TimeUnit.Year))
+    }
+
+
     private val uILoadingStateLiveData: LiveData<UILoadingState> =
         MutableLiveData<UILoadingState>().apply {
             value = UILoadingState()
@@ -43,8 +68,8 @@ class BitCoinPriceGraphViewModel
      */
     fun getBitCoinGraphModelLiveData(): LiveData<BitCoinGraphModel> = bitCoinGraphInfoLiveData
 
-    fun loadBitCoinGraphModel() {
-        getBitCoinGraphInfoUseCase(TimeSpan(1, TimeUnit.Months))
+    private fun loadBitCoinGraphModel(timeSpan: TimeSpan = TimeSpan(1, TimeUnit.Year)) {
+        getBitCoinGraphInfoUseCase(timeSpan)
             .doOnSubscribe {
                 uILoadingStateLiveData.postVal(UILoadingState(true))
             }

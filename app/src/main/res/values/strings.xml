@@ -2,4 +2,11 @@
     <string name="app_name">BitKoin</string>
     <string name="bit_coin_price_activity_tool_bar_title">Bitcoin Market Price</string>
     <string name="btn_retry">Retry</string>
+
+    <string name="btn_time_span_1_week">1W</string>
+    <string name="btn_time_span_1_month">1Mo</string>
+    <string name="btn_time_span_6_month">6Mo</string>
+    <string name="btn_time_span_1_year">1Y</string>
+    <string name="text_chart_loading">Loading bitcoin price....</string>
+    <string name="text_lable_date_vs_price">Date Vs. Price (%s)</string>
 </resources>
