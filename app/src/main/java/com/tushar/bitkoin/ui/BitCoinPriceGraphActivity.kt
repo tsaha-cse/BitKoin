@@ -1,6 +1,7 @@
 package com.tushar.bitkoin.ui
 
 import android.os.Bundle
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -28,6 +29,7 @@ import kotlinx.android.synthetic.main.layout_graph.btnTimeSpan1Week
 import kotlinx.android.synthetic.main.layout_graph.btnTimeSpan1Year
 import kotlinx.android.synthetic.main.layout_graph.btnTimeSpan6Month
 import kotlinx.android.synthetic.main.layout_graph.chart
+import kotlinx.android.synthetic.main.layout_graph.timeSpanOptionGroup
 import javax.inject.Inject
 
 
@@ -100,8 +102,10 @@ class BitCoinPriceGraphActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshLi
             )
             legend.isEnabled = true
             description.isEnabled = false
+            onChartGestureListener = SwipeRefreshControlGestureListener(swipeRefreshLayout)
         }
 
+        timeSpanOptionGroup?.visibility = View.GONE
     }
 
     override fun onRefresh() {
@@ -140,33 +144,44 @@ class BitCoinPriceGraphActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshLi
     }
 
     private fun onDrawPriceGraph(bitCoinGraphModel: BitCoinGraphModel?) {
+        if (timeSpanOptionGroup?.visibility == View.GONE) {
+            timeSpanOptionGroup?.visibility = View.VISIBLE
+        }
         val datePriceDot = mutableListOf<Entry>()
         val dates = mutableListOf<String>()
-        bitCoinGraphModel?.values?.let { datePrice ->
-            datePrice.forEachIndexed { index, singleDatePrice ->
+        bitCoinGraphModel?.values?.let { datePriceList ->
+            datePriceList.forEachIndexed { index, singleDatePrice ->
                 datePriceDot.add(Entry(index.toFloat(), singleDatePrice.price.toFloat()))
                 dates.add(singleDatePrice.dateText ?: "")
             }
+            chart?.xAxis?.mAxisMaximum = datePriceList.size.toFloat()
         }
         val datePriceDotSet =
             LineDataSet(datePriceDot, getString(R.string.text_lable_date_vs_price, "1W"))
-        datePriceDotSet.color =
-            ContextCompat.getColor(
-                this@BitCoinPriceGraphActivity,
-                R.color.colorPrimary
+        with(datePriceDotSet) {
+            color =
+                ContextCompat.getColor(
+                    this@BitCoinPriceGraphActivity,
+                    R.color.colorPrimary
+                )
+            lineWidth = 3f
+            circleRadius = 3f
+            setDrawCircleHole(true)
+            disableDashedLine()
+            setCircleColor(
+                ContextCompat.getColor(
+                    this@BitCoinPriceGraphActivity,
+                    R.color.colorPrimaryDark
+                )
             )
-        datePriceDotSet.lineWidth = 3f
-        datePriceDotSet.disableDashedLine()
-        datePriceDotSet.setCircleColor(
-            ContextCompat.getColor(
-                this@BitCoinPriceGraphActivity,
-                R.color.colorPrimaryDark
-            )
-        )
+        }
         val datePriceDotSetList = mutableListOf<ILineDataSet>()
         datePriceDotSetList.add(datePriceDotSet)
         chart?.data = LineData(datePriceDotSetList)
         chart?.xAxis?.valueFormatter = IndexAxisValueFormatter(dates.toTypedArray())
+        chart?.xAxis?.enableGridDashedLine(10f, 10f, 0f)
+        chart?.axisLeft?.enableGridDashedLine(10f, 10f, 0f)
+        chart?.data?.isHighlightEnabled = false
         chart?.let {
             it.invalidate()
             it.animateX(1000, Easing.EasingOption.Linear)

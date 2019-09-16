@@ -8,12 +8,12 @@
         android:id="@+id/chart"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/chart_margin_vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_default="percent"
         app:layout_constraintHeight_percent=".7"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="@dimen/chart_margin_vertical"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnTimeSpan1Week"
@@ -67,5 +67,11 @@
         app:layout_constraintStart_toEndOf="@+id/btnTimeSpan6Month"
         app:layout_constraintTop_toBottomOf="@+id/chart"
         app:layout_constraintVertical_bias="0.30" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/timeSpanOptionGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="btnTimeSpan1Week,btnTimeSpan1Month,btnTimeSpan6Month,btnTimeSpan1Year" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
