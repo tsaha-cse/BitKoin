@@ -155,6 +155,7 @@ class BitCoinPriceGraphActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshLi
                 dates.add(singleDatePrice.dateText ?: "")
             }
             chart?.xAxis?.mAxisMaximum = datePriceList.size.toFloat()
+            chart?.moveViewToX(0.toFloat())
         }
         val datePriceDotSet =
             LineDataSet(datePriceDot, getString(R.string.text_lable_date_vs_price, "1W"))
@@ -177,14 +178,16 @@ class BitCoinPriceGraphActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshLi
         }
         val datePriceDotSetList = mutableListOf<ILineDataSet>()
         datePriceDotSetList.add(datePriceDotSet)
-        chart?.data = LineData(datePriceDotSetList)
-        chart?.xAxis?.valueFormatter = IndexAxisValueFormatter(dates.toTypedArray())
-        chart?.xAxis?.enableGridDashedLine(10f, 10f, 0f)
-        chart?.axisLeft?.enableGridDashedLine(10f, 10f, 0f)
-        chart?.data?.isHighlightEnabled = false
         chart?.let {
-            it.invalidate()
+            it.data = LineData(datePriceDotSetList)
+            it.xAxis?.valueFormatter = IndexAxisValueFormatter(dates.toTypedArray())
+            it.xAxis?.enableGridDashedLine(10f, 10f, 0f)
+            it.axisLeft?.enableGridDashedLine(10f, 10f, 0f)
+            it.data?.isHighlightEnabled = false
+            it.notifyDataSetChanged()
             it.animateX(1000, Easing.EasingOption.Linear)
+            it.fitScreen()
+            it.invalidate()
         }
     }
 }
