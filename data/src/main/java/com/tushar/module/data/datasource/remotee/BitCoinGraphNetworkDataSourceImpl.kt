@@ -1,12 +1,12 @@
-package com.tushar.module.data.datasource.local
+package com.tushar.module.data.datasource.remotee
 
 import com.tushar.module.data.api.BlockChainApi
 import com.tushar.module.data.model.BitCoinGraphModel
 import io.reactivex.Single
 
-class BitCoinGraphNetworkDataSource(
+class BitCoinGraphNetworkDataSourceImpl(
     private val blockChainApi: BlockChainApi
-) : BitCoinGraphDataSource {
+) : BitCoinGraphNetworkDataSource {
 
     override fun getGraphInfo(timeSpan: String): Single<BitCoinGraphModel> =
         blockChainApi.getGraphInfo(timeSpan)

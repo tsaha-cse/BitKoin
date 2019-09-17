@@ -24,28 +24,34 @@ class BitCoinPriceGraphViewModel
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
+    private var recentRequestedTimeSpan: TimeSpan = TimeSpan(1, TimeUnit.Week)
+
     fun loadBitCoinGraphModelOnLaunch() {
         loadBitCoinGraphModel()
     }
 
     fun loadBitCoinGraphModelOnRefresh() {
-        loadBitCoinGraphModel()
+        loadBitCoinGraphModel(recentRequestedTimeSpan)
     }
 
     fun onClickOneWeekTimeSpan() {
-        loadBitCoinGraphModel(TimeSpan(1, TimeUnit.Week))
+        recentRequestedTimeSpan = TimeSpan(1, TimeUnit.Week)
+        loadBitCoinGraphModel()
     }
 
     fun onClickOneMonthTimeSpan() {
-        loadBitCoinGraphModel(TimeSpan(1, TimeUnit.Months))
+        recentRequestedTimeSpan = TimeSpan(1, TimeUnit.Months)
+        loadBitCoinGraphModel()
     }
 
     fun onClickSixMonthTimeSpan() {
-        loadBitCoinGraphModel(TimeSpan(6, TimeUnit.Months))
+        recentRequestedTimeSpan = TimeSpan(6, TimeUnit.Months)
+        loadBitCoinGraphModel()
     }
 
     fun onClickOneYearTimeSpan() {
-        loadBitCoinGraphModel(TimeSpan(1, TimeUnit.Year))
+        recentRequestedTimeSpan = TimeSpan(1, TimeUnit.Year)
+        loadBitCoinGraphModel(recentRequestedTimeSpan)
     }
 
 
@@ -60,15 +66,15 @@ class BitCoinPriceGraphViewModel
      */
     fun getLoadingStatusLiveData(): LiveData<UILoadingState> = uILoadingStateLiveData
 
-    private val bitCoinGraphInfoLiveData: LiveData<BitCoinGraphModel> = MutableLiveData()
+    private val bitCoinGraphInfoLiveData: LiveData<BitCoinGraphInfo> = MutableLiveData()
 
     /**
      * @return LiveData[BitCoinGraphModel]
      * contains all data to setup graph in the UI
      */
-    fun getBitCoinGraphModelLiveData(): LiveData<BitCoinGraphModel> = bitCoinGraphInfoLiveData
+    fun getBitCoinGraphModelLiveData(): LiveData<BitCoinGraphInfo> = bitCoinGraphInfoLiveData
 
-    private fun loadBitCoinGraphModel(timeSpan: TimeSpan = TimeSpan(1, TimeUnit.Year)) {
+    private fun loadBitCoinGraphModel(timeSpan: TimeSpan = recentRequestedTimeSpan) {
         getBitCoinGraphInfoUseCase(timeSpan)
             .doOnSubscribe {
                 uILoadingStateLiveData.postVal(UILoadingState(true))
@@ -81,14 +87,15 @@ class BitCoinPriceGraphViewModel
     }
 
     private fun onLoadingSuccess(bitCoinGraphInfo: BitCoinGraphInfo) {
-        bitCoinGraphInfoLiveData.postVal(bitCoinGraphInfo.bitCoinGraphModel)
+        bitCoinGraphInfoLiveData.postVal(bitCoinGraphInfo)
         when {
             bitCoinGraphInfo.dataSource == DataSource.Local -> {
                 uILoadingStateLiveData.postVal(
                     UILoadingState(
                         false,
                         RECOMMENDED_RELOAD_TEXT,
-                        RetryRecommendation.OPTIONAL
+                        RetryRecommendation.OPTIONAL,
+                        hideTimeSpanOptions = true
                     )
                 )
             }
@@ -112,9 +119,9 @@ class BitCoinPriceGraphViewModel
             is NoContentException -> {
                 uILoadingStateLiveData.postVal(
                     UILoadingState(
-                        false,
-                        ERROR_MSG_NO_INTERNET,
-                        RetryRecommendation.MUST
+                        showLoader = false,
+                        message = ERROR_MSG_NO_INTERNET,
+                        retryRecommendation = RetryRecommendation.MUST
                     )
                 )
             }
@@ -142,6 +149,6 @@ class BitCoinPriceGraphViewModel
         private const val ERROR_MSG_NO_INTERNET = "Connect to internet and try again"
         private const val ERROR_VALIDATION = "Validation failed"
         private const val RECOMMENDED_RELOAD_TEXT =
-            "Provided info might be old. Connect to internet to get the latest data!"
+            "Provided price might be outdated. Connect to internet to get the latest price!"
     }
 }

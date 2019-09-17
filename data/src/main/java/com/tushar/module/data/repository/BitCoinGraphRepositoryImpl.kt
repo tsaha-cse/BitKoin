@@ -1,51 +1,61 @@
 package com.tushar.module.data.repository
 
-import com.tushar.module.data.datasource.local.BitCoinGraphDataSource
-import com.tushar.module.data.datasource.remote.BitCoinGraphSharedPreferenceStorageException
-import com.tushar.module.data.datasource.remote.BitCoinGraphStorage
+import com.tushar.module.data.datasource.local.BitCoinGraphLocalStorage
+import com.tushar.module.data.datasource.local.SharedPreferenceStorageException
+import com.tushar.module.data.datasource.remotee.BitCoinGraphNetworkDataSource
 import com.tushar.module.data.model.BitCoinGraphModel
 import com.tushar.module.data.util.NoConnectivityException
 import com.tushar.module.data.util.NoInternetException
 import io.reactivex.Single
 
 class BitCoinGraphRepositoryImpl(
-    private val bitCoinGraphDataSource: BitCoinGraphDataSource,
-    private val bitCoinGraphStorage: BitCoinGraphStorage
+    private val bitCoinGraphNetworkDataSource: BitCoinGraphNetworkDataSource,
+    private val bitCoinGraphLocalStorage: BitCoinGraphLocalStorage
 ) : BitCoinGraphRepository {
 
     private lateinit var dataSource: DataSource
+    private lateinit var timeSpan: String
 
     override fun getGraphInfo(timeSpan: String): Single<BitCoinGraphInfo> =
         requestToNetworkSource(timeSpan)
             .onErrorResumeNext { throwable ->
                 when (throwable) {
                     is NoConnectivityException, is NoInternetException -> {
-                        requestToLocalStorage(timeSpan)
+                        requestToLocalStorage(timeSpan).map { timeSpanVsGraphLocalPair ->
+                            this@BitCoinGraphRepositoryImpl.timeSpan =
+                                timeSpanVsGraphLocalPair.first
+                            timeSpanVsGraphLocalPair.second
+                        }
                     }
                     else -> {
                         Single.error(throwable)
                     }
                 }
             }.map { bitCoinGraphModel ->
-                BitCoinGraphInfo(bitCoinGraphModel, dataSource)
+                BitCoinGraphInfo(
+                    bitCoinGraphModel,
+                    dataSource,
+                    this@BitCoinGraphRepositoryImpl.timeSpan
+                )
             }
 
 
     private fun requestToNetworkSource(timeSpan: String): Single<BitCoinGraphModel> =
-        bitCoinGraphDataSource.getGraphInfo(timeSpan)
-            .doOnSuccess {
+        bitCoinGraphNetworkDataSource.getGraphInfo(timeSpan)
+            .doOnSuccess { bitCoinGraphModel ->
                 // save to local storage
-                bitCoinGraphStorage.saveGraphInfo(it).subscribe()
+                bitCoinGraphLocalStorage.saveGraphInfo(timeSpan, bitCoinGraphModel).subscribe()
+                this@BitCoinGraphRepositoryImpl.timeSpan = timeSpan
                 dataSource = DataSource.Network
             }
 
-    private fun requestToLocalStorage(timeSpan: String): Single<BitCoinGraphModel> =
-        bitCoinGraphStorage.getGraphInfo(timeSpan)
+    private fun requestToLocalStorage(timeSpan: String): Single<Pair<String, BitCoinGraphModel>> =
+        bitCoinGraphLocalStorage.getGraphInfo(timeSpan)
             .doOnSuccess {
                 dataSource = DataSource.Local
             }.onErrorResumeNext { throwable ->
                 when (throwable) {
-                    is BitCoinGraphSharedPreferenceStorageException -> {
+                    is SharedPreferenceStorageException -> {
                         Single.error(NoContentException())
                     }
                     else -> Single.error(throwable)
@@ -61,7 +71,8 @@ sealed class DataSource {
 
 data class BitCoinGraphInfo(
     val bitCoinGraphModel: BitCoinGraphModel,
-    val dataSource: DataSource
+    val dataSource: DataSource,
+    val timeSpan: String
 )
 
 class NoContentException : RuntimeException() {

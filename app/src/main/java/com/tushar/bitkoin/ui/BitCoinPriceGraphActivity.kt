@@ -17,7 +17,9 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.google.android.material.snackbar.Snackbar
 import com.tushar.bitkoin.R
 import com.tushar.bitkoin.base.BaseActivity
-import com.tushar.module.data.model.BitCoinGraphModel
+import com.tushar.bitkoin.ext.px
+import com.tushar.module.data.repository.BitCoinGraphInfo
+import com.tushar.module.domain.ext.toFormattedTimeSpan
 import com.tushar.module.presentation.viewmodel.BitCoinPriceGraphViewModel
 import com.tushar.module.presentation.viewmodel.RetryRecommendation
 import com.tushar.module.presentation.viewmodel.UILoadingState
@@ -124,7 +126,7 @@ class BitCoinPriceGraphActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshLi
             swipeRefreshLayout?.isRefreshing = state.showLoader
             state.message?.let { message ->
                 Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_LONG).apply {
-                    if (state.retryRecommendation != RetryRecommendation.NOT_NEEDED) {
+                    if (state.retryRecommendation != RetryRecommendation.NO) {
                         setAction(getString(R.string.btn_retry)) {
                             bitCoinPriceGraphViewModel.loadBitCoinGraphModelOnRefresh()
                         }
@@ -138,18 +140,24 @@ class BitCoinPriceGraphActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshLi
                             )
                         )
                     }
+                    view.setPadding(0.px, 0.px, 0.px, 0.px)
                 }.show()
+
+                if (state.retryRecommendation == RetryRecommendation.MUST) {
+                    chart.setNoDataText(message)
+                    chart.invalidate()
+                }
             }
+
+            timeSpanOptionGroup?.visibility =
+                if (state.hideTimeSpanOptions) View.GONE else View.VISIBLE
         }
     }
 
-    private fun onDrawPriceGraph(bitCoinGraphModel: BitCoinGraphModel?) {
-        if (timeSpanOptionGroup?.visibility == View.GONE) {
-            timeSpanOptionGroup?.visibility = View.VISIBLE
-        }
+    private fun onDrawPriceGraph(bitCoinGraphInfo: BitCoinGraphInfo?) {
         val datePriceDot = mutableListOf<Entry>()
         val dates = mutableListOf<String>()
-        bitCoinGraphModel?.values?.let { datePriceList ->
+        bitCoinGraphInfo?.bitCoinGraphModel?.values?.let { datePriceList ->
             datePriceList.forEachIndexed { index, singleDatePrice ->
                 datePriceDot.add(Entry(index.toFloat(), singleDatePrice.price.toFloat()))
                 dates.add(singleDatePrice.dateText ?: "")
@@ -158,7 +166,13 @@ class BitCoinPriceGraphActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshLi
             chart?.moveViewToX(0.toFloat())
         }
         val datePriceDotSet =
-            LineDataSet(datePriceDot, getString(R.string.text_lable_date_vs_price, "1W"))
+            LineDataSet(
+                datePriceDot,
+                getString(
+                    R.string.text_lable_date_vs_price,
+                    bitCoinGraphInfo?.timeSpan.toFormattedTimeSpan()
+                )
+            )
         with(datePriceDotSet) {
             color =
                 ContextCompat.getColor(

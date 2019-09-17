@@ -8,5 +8,5 @@
     <string name="btn_time_span_6_month">6Mo</string>
     <string name="btn_time_span_1_year">1Y</string>
     <string name="text_chart_loading">Loading bitcoin price....</string>
-    <string name="text_lable_date_vs_price">Date Vs. Price (%s)</string>
+    <string name="text_lable_date_vs_price">Date Vs. Price %s</string>
 </resources>

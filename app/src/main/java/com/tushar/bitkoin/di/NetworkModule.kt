@@ -8,10 +8,10 @@ import com.tushar.bitkoin.BuildConfig
 import com.tushar.bitkoin.R
 import com.tushar.module.data.api.BitCoinGraphInfoDeserializer
 import com.tushar.module.data.api.BlockChainApi
-import com.tushar.module.data.datasource.local.BitCoinGraphDataSource
-import com.tushar.module.data.datasource.local.BitCoinGraphNetworkDataSource
-import com.tushar.module.data.datasource.remote.BitCoinGraphSharedPreferenceDataStorage
-import com.tushar.module.data.datasource.remote.BitCoinGraphStorage
+import com.tushar.module.data.datasource.remotee.BitCoinGraphNetworkDataSource
+import com.tushar.module.data.datasource.remotee.BitCoinGraphNetworkDataSourceImpl
+import com.tushar.module.data.datasource.local.BitCoinGraphSharedPreferenceDataLocalStorage
+import com.tushar.module.data.datasource.local.BitCoinGraphLocalStorage
 import com.tushar.module.data.model.BitCoinGraphModel
 import com.tushar.module.data.repository.BitCoinGraphRepository
 import com.tushar.module.data.repository.BitCoinGraphRepositoryImpl
@@ -69,8 +69,8 @@ object NetworkModule {
     @JvmStatic
     @Provides
     @Singleton
-    fun provideBitCoinGraphDataSource(blockChainApi: BlockChainApi): BitCoinGraphDataSource =
-        BitCoinGraphNetworkDataSource(blockChainApi)
+    fun provideBitCoinGraphDataSource(blockChainApi: BlockChainApi): BitCoinGraphNetworkDataSource =
+        BitCoinGraphNetworkDataSourceImpl(blockChainApi)
 
     @JvmStatic
     @Provides
@@ -78,8 +78,8 @@ object NetworkModule {
     fun provideBitCoinGraphStorage(
         sharedPreferences: SharedPreferences,
         gson: Gson
-    ): BitCoinGraphStorage =
-        BitCoinGraphSharedPreferenceDataStorage(
+    ): BitCoinGraphLocalStorage =
+        BitCoinGraphSharedPreferenceDataLocalStorage(
             sharedPreferences,
             gson
         )
@@ -88,9 +88,9 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideBitCoinGraphRepository(
-        bitCoinGraphDataSource: BitCoinGraphDataSource,
-        bitCoinGraphStorage: BitCoinGraphStorage
+        bitCoinGraphNetworkDataSource: BitCoinGraphNetworkDataSource,
+        bitCoinGraphLocalStorage: BitCoinGraphLocalStorage
     ): BitCoinGraphRepository =
-        BitCoinGraphRepositoryImpl(bitCoinGraphDataSource, bitCoinGraphStorage)
+        BitCoinGraphRepositoryImpl(bitCoinGraphNetworkDataSource, bitCoinGraphLocalStorage)
 
 }
