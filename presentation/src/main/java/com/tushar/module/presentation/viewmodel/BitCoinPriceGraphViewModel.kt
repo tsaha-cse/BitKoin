@@ -1,5 +1,6 @@
 package com.tushar.module.presentation.viewmodel
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.tushar.module.data.model.BitCoinGraphModel
@@ -74,7 +75,8 @@ class BitCoinPriceGraphViewModel
      */
     fun getBitCoinGraphModelLiveData(): LiveData<BitCoinGraphInfo> = bitCoinGraphInfoLiveData
 
-    private fun loadBitCoinGraphModel(timeSpan: TimeSpan = recentRequestedTimeSpan) {
+    @VisibleForTesting
+    fun loadBitCoinGraphModel(timeSpan: TimeSpan = recentRequestedTimeSpan) {
         getBitCoinGraphInfoUseCase(timeSpan)
             .doOnSubscribe {
                 uILoadingStateLiveData.postVal(UILoadingState(true))

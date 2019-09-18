@@ -71,4 +71,5 @@ dependencies {
     testImplementation testDependencies.mockitoCore
     testImplementation testDependencies.mockitoKotlin
     testImplementation androidxDependencies.archCoreTesting
+    testImplementation kotson
 }

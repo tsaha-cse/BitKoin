@@ -15,10 +15,10 @@ import com.tushar.module.domain.base.BaseTest
 import com.tushar.module.domain.base.NullParamException
 import com.tushar.module.domain.base.ParamValidationException
 import com.tushar.module.domain.base.schedulers.ExecutionSchedulers
+import com.tushar.module.domain.base.schedulers.TestAppSchedulers
 import com.tushar.module.domain.price1WeekJson
-import com.tushar.module.domain.schedulers.TestAppSchedulers
 import io.reactivex.Single
-import junit.framework.Assert.assertEquals
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
