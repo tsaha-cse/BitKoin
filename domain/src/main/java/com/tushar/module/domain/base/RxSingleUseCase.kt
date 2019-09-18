@@ -1,14 +1,17 @@
 package com.tushar.module.domain.base
 
+import androidx.annotation.VisibleForTesting
 import com.tushar.module.domain.base.schedulers.ExecutionSchedulers
 import io.reactivex.Completable
 import io.reactivex.Single
 
 abstract class RxSingleUseCase<Param, R>(private val schedulers: ExecutionSchedulers) {
 
-    protected abstract fun buildUseCase(param: Param?): Single<R>
+    @VisibleForTesting
+    abstract fun buildUseCase(param: Param?): Single<R>
 
-    protected open fun validate(param: Param?): Completable = Completable.complete()
+    @VisibleForTesting
+    open fun validate(param: Param?): Completable = Completable.complete()
 
     protected open fun onSuccess(result: R) {}
 

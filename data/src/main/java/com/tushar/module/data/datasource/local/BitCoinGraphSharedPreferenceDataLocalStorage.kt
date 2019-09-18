@@ -15,9 +15,11 @@ class BitCoinGraphSharedPreferenceDataLocalStorage(
     override fun getGraphInfo(timeSpan: String): Single<Pair<String, BitCoinGraphModel>> =
         sharedPreferences.getString(BIT_COIN_GRAPH_MODEL_KEY, null)?.let { string ->
             val savedLocalModel: BitCoinGraphLocalModel? = gson.fromJson(string)
-            savedLocalModel?.let { localModel ->
-                Single.just(Pair(localModel.timeSpan, localModel.bitCoinGraphModel))
-            } ?: Single.error(SharedPreferenceStorageException(MSG_GENERAL_NO_DATA))
+            if (savedLocalModel?.timeSpan != null && savedLocalModel.bitCoinGraphModel != null) {
+                Single.just(Pair(savedLocalModel.timeSpan, savedLocalModel.bitCoinGraphModel))
+            } else {
+                Single.error(SharedPreferenceStorageException(MSG_GENERAL_NO_DATA))
+            }
         } ?: Single.error(SharedPreferenceStorageException(MSG_GENERAL_NO_DATA))
 
     override fun saveGraphInfo(
@@ -43,6 +45,6 @@ class BitCoinGraphSharedPreferenceDataLocalStorage(
 class SharedPreferenceStorageException(msg: String) : RuntimeException(msg)
 
 data class BitCoinGraphLocalModel(
-    val timeSpan: String,
-    val bitCoinGraphModel: BitCoinGraphModel
+    val timeSpan: String?,
+    val bitCoinGraphModel: BitCoinGraphModel?
 )

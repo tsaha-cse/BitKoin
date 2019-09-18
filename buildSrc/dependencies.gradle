@@ -13,6 +13,7 @@ project.ext {
     kotlinDependencies = [
             gradlePlugin: "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin",
             stdLib      : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlin",
+            allOpen     : "org.jetbrains.kotlin:kotlin-allopen:$versions.kotlin"
     ]
 
     versions.dagger = '2.24'

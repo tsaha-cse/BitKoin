@@ -19,7 +19,7 @@ class GetBitCoinGraphInfoUseCase
 
     override fun validate(param: TimeSpan?): Completable = param?.let {
         when {
-            it.count == 0 -> Completable.error(ParamValidationException("TimeSpan.count=0 is not allowed!"))
+            it.count <= 0 -> Completable.error(ParamValidationException("TimeSpan.count<=0 is not allowed!"))
             else -> Completable.complete()
         }
     } ?: Completable.error(ParamValidationException("the param TimeSpan is null"))

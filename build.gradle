@@ -10,6 +10,7 @@ buildscript {
     dependencies {
         classpath androidPlugin
         classpath kotlinDependencies.gradlePlugin
+        classpath kotlinDependencies.allOpen
     }
 }
 

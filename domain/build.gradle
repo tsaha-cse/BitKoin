@@ -59,4 +59,5 @@ dependencies {
     testImplementation testDependencies.junit
     testImplementation testDependencies.mockitoCore
     testImplementation testDependencies.mockitoKotlin
+    testImplementation kotson
 }
