@@ -6,10 +6,10 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
+@Mockable
 @Module(includes = [ViewModelModule::class])
-object AppModule {
-    
-    @JvmStatic
+class AppModule {
+
     @Provides
     @Singleton
     fun provideContext(application: Application): Context = application

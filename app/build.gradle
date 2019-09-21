@@ -15,7 +15,7 @@ android {
         targetSdkVersion versions.targetVersion
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.tushar.bitkoin.base.BaseTestRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
 
@@ -44,6 +44,15 @@ android {
 
     sourceSets {
         main { assets.srcDirs = ['src/main/assets', 'src/androidTest/assets/', 'src/main/assets/'] }
+    }
+}
+
+android.applicationVariants.all { v ->
+    if (v.buildType.name == "debug") {
+        apply plugin: "kotlin-allopen"
+        allOpen {
+            annotation('com.tushar.bitkoin.di.Mockable')
+        }
     }
 }
 
@@ -82,10 +91,19 @@ dependencies {
 
     implementation mPAndroidChart
 
+    androidTestImplementation testDependencies.mockitoCore
+    androidTestImplementation testDependencies.mockitoAndroid
+    androidTestImplementation (testDependencies.mockitoKotlin) {
+        exclude group: 'org.mockito', module: 'mockito-core'
+    }
+
     androidTestImplementation testDependencies.androidXTestCore
     androidTestImplementation testDependencies.androidXRunner
     androidTestImplementation testDependencies.androidXTestRule
     androidTestImplementation testDependencies.androidXJunit
     androidTestImplementation testDependencies.espressoCore
     androidTestImplementation testDependencies.mockWebServer
+    androidTestImplementation testDependencies.daggerMock
+    androidTestImplementation testDependencies.daggerMockKotlin
+    kaptAndroidTest daggerDependencies.compiler
 }

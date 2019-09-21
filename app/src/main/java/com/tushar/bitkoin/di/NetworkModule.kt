@@ -8,26 +8,30 @@ import com.tushar.bitkoin.BuildConfig
 import com.tushar.bitkoin.R
 import com.tushar.module.data.api.BitCoinGraphInfoDeserializer
 import com.tushar.module.data.api.BlockChainApi
+import com.tushar.module.data.datasource.local.BitCoinGraphLocalStorage
+import com.tushar.module.data.datasource.local.BitCoinGraphSharedPreferenceDataLocalStorage
 import com.tushar.module.data.datasource.remotee.BitCoinGraphNetworkDataSource
 import com.tushar.module.data.datasource.remotee.BitCoinGraphNetworkDataSourceImpl
-import com.tushar.module.data.datasource.local.BitCoinGraphSharedPreferenceDataLocalStorage
-import com.tushar.module.data.datasource.local.BitCoinGraphLocalStorage
 import com.tushar.module.data.model.BitCoinGraphModel
 import com.tushar.module.data.repository.BitCoinGraphRepository
 import com.tushar.module.data.repository.BitCoinGraphRepositoryImpl
+import com.tushar.module.data.util.NoConnectionInterceptor
 import com.tushar.module.data.util.createOkHttp
 import com.tushar.module.data.util.createWebService
-import com.tushar.module.data.util.NoConnectionInterceptor
 import dagger.Module
 import dagger.Provides
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
+@Mockable
 @Module
-object NetworkModule {
+class NetworkModule {
 
-    @JvmStatic
+    val baseUrl: String
+        get() = BuildConfig.BLOCK_CHAIN_API_BASE_URL
+
     @Provides
     @Singleton
     fun provideGson(): Gson =
@@ -35,21 +39,25 @@ object NetworkModule {
             .registerTypeAdapter(BitCoinGraphModel::class.java, BitCoinGraphInfoDeserializer())
             .create()
 
-    @JvmStatic
     @Provides
     @Singleton
     fun provideNoConnectionInterceptor(context: Context): NoConnectionInterceptor =
         NoConnectionInterceptor(context)
 
-    @JvmStatic
+    @Provides
+    @Singleton
+    @Named("base_url")
+    fun provideBaseUrl(): String = baseUrl
+
     @Provides
     @Singleton
     fun provideBlockChainApiService(
+        @Named("base_url") baseUrl: String,
         gson: Gson,
         noConnectionInterceptor: NoConnectionInterceptor
     ): BlockChainApi =
         createWebService(
-            BuildConfig.BLOCK_CHAIN_API_BASE_URL,
+            baseUrl,
             createOkHttp(
                 interceptors = listOf(noConnectionInterceptor),
                 level =
@@ -60,19 +68,16 @@ object NetworkModule {
             setOf(GsonConverterFactory.create(gson))
         )
 
-    @JvmStatic
     @Provides
     @Singleton
     fun provideSharedPreference(context: Context): SharedPreferences =
         context.getSharedPreferences(context.getString(R.string.app_name), Context.MODE_PRIVATE)
 
-    @JvmStatic
     @Provides
     @Singleton
     fun provideBitCoinGraphDataSource(blockChainApi: BlockChainApi): BitCoinGraphNetworkDataSource =
         BitCoinGraphNetworkDataSourceImpl(blockChainApi)
 
-    @JvmStatic
     @Provides
     @Singleton
     fun provideBitCoinGraphStorage(
@@ -84,7 +89,6 @@ object NetworkModule {
             gson
         )
 
-    @JvmStatic
     @Provides
     @Singleton
     fun provideBitCoinGraphRepository(

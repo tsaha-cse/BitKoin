@@ -1,6 +1,5 @@
-package com.tushar.module.domain.schedulers
+package com.tushar.module.domain.base.schedulers
 
-import com.tushar.module.domain.base.schedulers.ExecutionSchedulers
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.Schedulers
 

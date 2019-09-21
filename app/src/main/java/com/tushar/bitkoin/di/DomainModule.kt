@@ -9,10 +9,13 @@ import javax.inject.Singleton
 /**
  * use cases dependencies resolved here
  */
+@Mockable
 @Module
-object DomainModule {
+class DomainModule {
 
-    @JvmStatic
+    val executionSchedulers: ExecutionSchedulers
+        get() = AppSchedulers()
+
     @Provides
     @Singleton
     fun provideExecutionSchedulers(): ExecutionSchedulers = AppSchedulers()
