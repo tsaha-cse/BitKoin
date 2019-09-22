@@ -2,6 +2,7 @@ package com.tushar.bitkoin.ui
 
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.FlakyTest
 import androidx.test.rule.ActivityTestRule
 import com.tushar.bitkoin.R
 import com.tushar.bitkoin.util.ChartLabel.CHART_1_MONTHS
@@ -88,6 +89,7 @@ class BitCoinPriceGraphActivityTest {
     }
 
     @Test
+    @FlakyTest
     fun shouldUpdateGraphRespondToButtonClick() {
         mockWebServer.setDispatcher(SuccessDispatcher())
         activityTestRule.launchActivity(null)
