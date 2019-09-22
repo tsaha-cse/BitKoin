@@ -9,8 +9,4 @@ abstract class BaseViewModel : ViewModel() {
     protected fun <T> LiveData<T>.postVal(value: T) {
         (this as? MutableLiveData)?.postValue(value)
     }
-
-    protected fun <T> LiveData<T>.setVal(value: T) {
-        (this as? MutableLiveData)?.value = value
-    }
 }

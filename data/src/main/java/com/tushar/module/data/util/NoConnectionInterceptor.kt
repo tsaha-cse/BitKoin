@@ -23,6 +23,7 @@ class NoConnectionInterceptor @Inject constructor(private val context: Context) 
         }
     }
 
+    @SuppressWarnings("ReturnCount")
     private fun isConnectionOn(): Boolean {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -44,9 +45,9 @@ class NoConnectionInterceptor @Inject constructor(private val context: Context) 
     }
 
     private fun isInternetAvailable(): Boolean = try {
-        val timeoutMs = 1500
+        val timeoutMs = TIME_OUT_MS
         val socket = Socket()
-        val sockAddress = InetSocketAddress("8.8.8.8", 53)
+        val sockAddress = InetSocketAddress(DNS_GOOGLE, PORT)
         socket.connect(sockAddress, timeoutMs)
         socket.close()
         true
@@ -60,7 +61,11 @@ class NoConnectivityException : IOException() {
         get() = "No network available, please check your WiFi or data is turned on"
 }
 
-class NoInternetException() : IOException() {
+class NoInternetException : IOException() {
     override val message: String
         get() = "No internet available, please check your WiFi or Data connection"
 }
+
+const val TIME_OUT_MS: Int = 1500
+const val PORT: Int = 53
+const val DNS_GOOGLE: String = "8.8.8.8"

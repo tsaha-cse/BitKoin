@@ -1,3 +1,3 @@
 package com.tushar.bitkoin.di
 
-annotation class Mockable
+annotation class ClassOpen

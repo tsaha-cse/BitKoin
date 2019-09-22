@@ -14,7 +14,7 @@ import com.tushar.module.data.api.BitCoinGraphInfoDeserializer
 import com.tushar.module.data.base.BaseTest
 import com.tushar.module.data.model.BitCoinGraphModel
 import com.tushar.module.data.price1YearJson
-import junit.framework.Assert.assertEquals
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyString

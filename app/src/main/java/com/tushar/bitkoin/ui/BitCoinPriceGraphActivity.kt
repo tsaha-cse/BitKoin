@@ -125,23 +125,7 @@ class BitCoinPriceGraphActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshLi
         uiLoadingState?.let { state ->
             swipeRefreshLayout?.isRefreshing = state.showLoader
             state.message?.let { message ->
-                Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_LONG).apply {
-                    if (state.retryRecommendation != RetryRecommendation.NO) {
-                        setAction(getString(R.string.btn_retry)) {
-                            bitCoinPriceGraphViewModel.loadBitCoinGraphModelOnRefresh()
-                        }
-                    }
-
-                    if (state.retryRecommendation == RetryRecommendation.OPTIONAL) {
-                        setActionTextColor(
-                            ContextCompat.getColor(
-                                this@BitCoinPriceGraphActivity,
-                                R.color.colorPrimary
-                            )
-                        )
-                    }
-                    view.setPadding(0.px, 0.px, 0.px, 0.px)
-                }.show()
+                configureAndShowSnackBar(state, message)
 
                 if (state.retryRecommendation == RetryRecommendation.MUST) {
                     chart.setNoDataText(message)
@@ -152,6 +136,26 @@ class BitCoinPriceGraphActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshLi
             timeSpanOptionGroup?.visibility =
                 if (state.hideTimeSpanOptions) View.GONE else View.VISIBLE
         }
+    }
+
+    private fun configureAndShowSnackBar(state: UILoadingState, message: String) {
+        Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_LONG).apply {
+            if (state.retryRecommendation != RetryRecommendation.NO) {
+                setAction(getString(R.string.btn_retry)) {
+                    bitCoinPriceGraphViewModel.loadBitCoinGraphModelOnRefresh()
+                }
+            }
+
+            if (state.retryRecommendation == RetryRecommendation.OPTIONAL) {
+                setActionTextColor(
+                    ContextCompat.getColor(
+                        this@BitCoinPriceGraphActivity,
+                        R.color.colorPrimary
+                    )
+                )
+            }
+            view.setPadding(0.px, 0.px, 0.px, 0.px)
+        }.show()
     }
 
     private fun onDrawPriceGraph(bitCoinGraphInfo: BitCoinGraphInfo?) {
@@ -179,8 +183,8 @@ class BitCoinPriceGraphActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshLi
                     this@BitCoinPriceGraphActivity,
                     R.color.colorPrimary
                 )
-            lineWidth = 3f
-            circleRadius = 3f
+            lineWidth = GRAPH_LINE_WIDTH
+            circleRadius = GRAPH_LINE_RADIUS
             setDrawCircleHole(true)
             disableDashedLine()
             setCircleColor(
@@ -195,13 +199,20 @@ class BitCoinPriceGraphActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshLi
         chart?.let {
             it.data = LineData(datePriceDotSetList)
             it.xAxis?.valueFormatter = IndexAxisValueFormatter(dates.toTypedArray())
-            it.xAxis?.enableGridDashedLine(10f, 10f, 0f)
-            it.axisLeft?.enableGridDashedLine(10f, 10f, 0f)
+            it.xAxis?.enableGridDashedLine(LENGTH_LINE, LENGTH_LINE, 0f)
+            it.axisLeft?.enableGridDashedLine(LENGTH_LINE, LENGTH_LINE, 0f)
             it.data?.isHighlightEnabled = false
             it.notifyDataSetChanged()
-            it.animateX(1000, Easing.EasingOption.Linear)
+            it.animateX(CHART_ANIM_DURATION_MILLIS, Easing.EasingOption.Linear)
             it.fitScreen()
             it.invalidate()
         }
+    }
+
+    companion object {
+        private const val GRAPH_LINE_WIDTH = 3f
+        private const val GRAPH_LINE_RADIUS = 3f
+        private const val LENGTH_LINE = 10f
+        private const val CHART_ANIM_DURATION_MILLIS = 1000
     }
 }

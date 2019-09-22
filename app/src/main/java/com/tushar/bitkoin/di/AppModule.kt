@@ -6,7 +6,7 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-@Mockable
+@ClassOpen
 @Module(includes = [ViewModelModule::class])
 class AppModule {
 

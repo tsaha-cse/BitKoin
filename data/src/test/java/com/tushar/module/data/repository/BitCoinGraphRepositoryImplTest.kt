@@ -39,7 +39,7 @@ class BitCoinGraphRepositoryImplTest : BaseTest() {
     @Mock
     lateinit var bitCoinGraphLocalStorage: BitCoinGraphLocalStorage
 
-    lateinit var bitCoinGraphRepository: BitCoinGraphRepositoryImpl
+    private lateinit var bitCoinGraphRepository: BitCoinGraphRepositoryImpl
 
     @Before
     fun setUp() {

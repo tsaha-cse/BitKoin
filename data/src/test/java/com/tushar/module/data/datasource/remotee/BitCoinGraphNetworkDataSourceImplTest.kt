@@ -15,7 +15,7 @@ class BitCoinGraphNetworkDataSourceImplTest : BaseTest() {
     @Mock
     lateinit var blockChainApi: BlockChainApi
 
-    lateinit var bitCoinGraphNetworkDataSourceImpl: BitCoinGraphNetworkDataSourceImpl
+    private lateinit var bitCoinGraphNetworkDataSourceImpl: BitCoinGraphNetworkDataSourceImpl
 
     private val timeSpanCaptor = argumentCaptor<String>()
 

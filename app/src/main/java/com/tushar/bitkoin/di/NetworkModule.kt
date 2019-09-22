@@ -25,7 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
 import javax.inject.Singleton
 
-@Mockable
+@ClassOpen
 @Module
 class NetworkModule {
 

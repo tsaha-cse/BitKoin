@@ -9,7 +9,7 @@ import javax.inject.Singleton
 /**
  * use cases dependencies resolved here
  */
-@Mockable
+@ClassOpen
 @Module
 class DomainModule {
 

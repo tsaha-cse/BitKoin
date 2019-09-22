@@ -11,6 +11,7 @@ class BitKoinViewModelFactory @Inject
 constructor(private val creators: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>) :
     ViewModelProvider.Factory {
 
+    @Throws(RuntimeException::class)
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         var creator: Provider<out ViewModel>? = creators[modelClass]
@@ -28,7 +29,7 @@ constructor(private val creators: Map<Class<out ViewModel>, @JvmSuppressWildcard
         try {
             return creator.get() as T
         } catch (e: Exception) {
-            throw RuntimeException(e)
+            throw RuntimeException("Provided type is not a valid ViewModel $e")
         }
     }
 }

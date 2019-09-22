@@ -4,6 +4,8 @@ plugins {
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
 }
+
+apply from: "../buildSrc/detekt/detekt.gradle"
 apply from: '../buildSrc/dependencies.gradle'
 
 android {
@@ -51,7 +53,7 @@ android.applicationVariants.all { v ->
     if (v.buildType.name == "debug") {
         apply plugin: "kotlin-allopen"
         allOpen {
-            annotation('com.tushar.bitkoin.di.Mockable')
+            annotation('com.tushar.bitkoin.di.ClassOpen')
         }
     }
 }
