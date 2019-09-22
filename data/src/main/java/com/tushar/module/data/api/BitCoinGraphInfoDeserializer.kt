@@ -10,6 +10,10 @@ import com.tushar.module.data.model.DatePrice
 import com.tushar.module.data.util.toDateTimeText
 import java.lang.reflect.Type
 
+/**
+ * JSON deserializer for the REST API response
+ * also it can deserialize the json from local source
+ */
 class BitCoinGraphInfoDeserializer : JsonDeserializer<BitCoinGraphModel> {
     override fun deserialize(
         json: JsonElement?,

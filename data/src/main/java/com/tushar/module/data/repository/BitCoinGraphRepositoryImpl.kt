@@ -8,6 +8,12 @@ import com.tushar.module.data.util.NoConnectivityException
 import com.tushar.module.data.util.NoInternetException
 import io.reactivex.Single
 
+/**
+ * which uses both Network[BitCoinGraphNetworkDataSource] and Local[BitCoinGraphLocalStorage]
+ * as the data sources. When repository is requested to serve the data, it first looks at the
+ * [BitCoinGraphNetworkDataSource] and if it succeed then it save the data to
+ * [BitCoinGraphLocalStorage]. Otherwise it directly request to [BitCoinGraphLocalStorage]
+ */
 class BitCoinGraphRepositoryImpl(
     private val bitCoinGraphNetworkDataSource: BitCoinGraphNetworkDataSource,
     private val bitCoinGraphLocalStorage: BitCoinGraphLocalStorage

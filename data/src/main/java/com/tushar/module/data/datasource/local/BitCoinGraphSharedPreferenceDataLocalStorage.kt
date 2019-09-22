@@ -12,6 +12,13 @@ class BitCoinGraphSharedPreferenceDataLocalStorage(
     private val gson: Gson
 ) : BitCoinGraphLocalStorage {
 
+    /**
+     * get the most recent saved graph data that was loaded
+     * successfully from network source.
+     * here @param {timeSpan} is optional but kept considering that:
+     * if in future if we want to implement DB as a local source
+     * we might need to query the table based on {timeSpan}
+     */
     override fun getGraphInfo(timeSpan: String): Single<Pair<String, BitCoinGraphModel>> =
         sharedPreferences.getString(BIT_COIN_GRAPH_MODEL_KEY, null)?.let { string ->
             val savedLocalModel: BitCoinGraphLocalModel? = gson.fromJson(string)

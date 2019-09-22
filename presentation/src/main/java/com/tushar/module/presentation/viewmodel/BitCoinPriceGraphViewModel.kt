@@ -45,6 +45,7 @@ class BitCoinPriceGraphViewModel
         loadBitCoinGraphModel()
     }
 
+    @SuppressWarnings("MagicNumber")
     fun onClickSixMonthTimeSpan() {
         recentRequestedTimeSpan = TimeSpan(6, TimeSpanUnit.Months)
         loadBitCoinGraphModel()
@@ -133,7 +134,8 @@ class BitCoinPriceGraphViewModel
                     UILoadingState(
                         false,
                         ERROR_MSG_SOME_THING_WENT_WRONG,
-                        RetryRecommendation.MUST
+                        RetryRecommendation.MUST,
+                        hideTimeSpanOptions = true
                     )
                 )
             }

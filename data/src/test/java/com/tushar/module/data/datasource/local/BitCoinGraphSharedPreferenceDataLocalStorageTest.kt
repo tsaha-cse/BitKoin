@@ -94,7 +94,7 @@ class BitCoinGraphSharedPreferenceDataLocalStorageTest : BaseTest() {
     }
 
     companion object {
-        private const val BIT_COIN_GRAPH_MODEL_KEY = "bit_coin_graph_model_key"
+        private const val BIT_COIN_GRAPH_MODEL_KEY = "bit_coin_graph_model"
     }
 
 }

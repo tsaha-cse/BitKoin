@@ -10,7 +10,10 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
 
-
+/**
+ * Accepts request from repository layer, validate the input request
+ * and if it is valid passes the request to data layer.
+ */
 class GetBitCoinGraphInfoUseCase
 @Inject constructor(
     private val bitCoinGraphRepository: BitCoinGraphRepository,
