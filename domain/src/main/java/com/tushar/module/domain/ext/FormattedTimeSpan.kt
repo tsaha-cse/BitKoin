@@ -1,6 +1,6 @@
 package com.tushar.module.domain.ext
 
-import com.tushar.module.domain.usecase.TimeUnit
+import com.tushar.module.domain.usecase.TimeSpanUnit
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -16,10 +16,10 @@ fun String?.toFormattedTimeSpan(): String {
         timeText += timeTextMatcher.group()
     }
     return when (timeText) {
-        TimeUnit.Day.key -> "${count}D"
-        TimeUnit.Week.key -> "${count}W"
-        TimeUnit.Months.key -> "${count}Mo"
-        TimeUnit.Year.key -> "${count}Y"
+        TimeSpanUnit.Day.key -> "${count}D"
+        TimeSpanUnit.Week.key -> "${count}W"
+        TimeSpanUnit.Months.key -> "${count}Mo"
+        TimeSpanUnit.Year.key -> "${count}Y"
         else -> ""
     }
 }

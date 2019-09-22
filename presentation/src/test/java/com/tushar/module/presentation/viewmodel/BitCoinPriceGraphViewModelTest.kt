@@ -15,7 +15,7 @@ import com.tushar.module.data.repository.NoContentException
 import com.tushar.module.domain.base.ParamValidationException
 import com.tushar.module.domain.usecase.GetBitCoinGraphInfoUseCase
 import com.tushar.module.domain.usecase.TimeSpan
-import com.tushar.module.domain.usecase.TimeUnit
+import com.tushar.module.domain.usecase.TimeSpanUnit
 import com.tushar.module.presentation.TIME_SPAN_1_WEEK
 import com.tushar.module.presentation.TIME_SPAN_1_YEAR
 import com.tushar.module.presentation.base.observeOnce
@@ -55,7 +55,7 @@ class BitCoinPriceGraphViewModelTest {
             .thenReturn(Single.error(NoContentException()))
         bitCoinPriceGraphViewModel = BitCoinPriceGraphViewModel(getBitCoinGraphInfoUseCase)
         bitCoinPriceGraphViewModel.loadBitCoinGraphModelOnLaunch()
-        assertEquals(TimeSpan(1, TimeUnit.Week), timeSpanCaptor.firstValue)
+        assertEquals(TimeSpan(1, TimeSpanUnit.Week), timeSpanCaptor.firstValue)
     }
 
     @Test
@@ -65,7 +65,7 @@ class BitCoinPriceGraphViewModelTest {
         bitCoinPriceGraphViewModel = BitCoinPriceGraphViewModel(getBitCoinGraphInfoUseCase)
         bitCoinPriceGraphViewModel.onClickOneMonthTimeSpan()
         bitCoinPriceGraphViewModel.loadBitCoinGraphModelOnRefresh()
-        assertEquals(TimeSpan(1, TimeUnit.Months), timeSpanCaptor.firstValue)
+        assertEquals(TimeSpan(1, TimeSpanUnit.Months), timeSpanCaptor.firstValue)
     }
 
     @Test
@@ -74,7 +74,7 @@ class BitCoinPriceGraphViewModelTest {
             .thenReturn(Single.error(NoContentException()))
         bitCoinPriceGraphViewModel = BitCoinPriceGraphViewModel(getBitCoinGraphInfoUseCase)
         bitCoinPriceGraphViewModel.onClickOneWeekTimeSpan()
-        assertEquals(TimeSpan(1, TimeUnit.Week), timeSpanCaptor.firstValue)
+        assertEquals(TimeSpan(1, TimeSpanUnit.Week), timeSpanCaptor.firstValue)
     }
 
     @Test
@@ -83,7 +83,7 @@ class BitCoinPriceGraphViewModelTest {
             .thenReturn(Single.error(NoContentException()))
         bitCoinPriceGraphViewModel = BitCoinPriceGraphViewModel(getBitCoinGraphInfoUseCase)
         bitCoinPriceGraphViewModel.onClickOneMonthTimeSpan()
-        assertEquals(TimeSpan(1, TimeUnit.Months), timeSpanCaptor.firstValue)
+        assertEquals(TimeSpan(1, TimeSpanUnit.Months), timeSpanCaptor.firstValue)
     }
 
     @Test
@@ -92,7 +92,7 @@ class BitCoinPriceGraphViewModelTest {
             .thenReturn(Single.error(NoContentException()))
         bitCoinPriceGraphViewModel = BitCoinPriceGraphViewModel(getBitCoinGraphInfoUseCase)
         bitCoinPriceGraphViewModel.onClickSixMonthTimeSpan()
-        assertEquals(TimeSpan(6, TimeUnit.Months), timeSpanCaptor.firstValue)
+        assertEquals(TimeSpan(6, TimeSpanUnit.Months), timeSpanCaptor.firstValue)
     }
 
     @Test
@@ -101,7 +101,7 @@ class BitCoinPriceGraphViewModelTest {
             .thenReturn(Single.error(NoContentException()))
         bitCoinPriceGraphViewModel = BitCoinPriceGraphViewModel(getBitCoinGraphInfoUseCase)
         bitCoinPriceGraphViewModel.onClickOneYearTimeSpan()
-        assertEquals(TimeSpan(1, TimeUnit.Year), timeSpanCaptor.firstValue)
+        assertEquals(TimeSpan(1, TimeSpanUnit.Year), timeSpanCaptor.firstValue)
     }
 
 

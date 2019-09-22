@@ -11,7 +11,7 @@ import com.tushar.module.domain.base.NullParamException
 import com.tushar.module.domain.base.ParamValidationException
 import com.tushar.module.domain.usecase.GetBitCoinGraphInfoUseCase
 import com.tushar.module.domain.usecase.TimeSpan
-import com.tushar.module.domain.usecase.TimeUnit
+import com.tushar.module.domain.usecase.TimeSpanUnit
 import com.tushar.module.presentation.base.BaseViewModel
 import com.tushar.module.presentation.util.exhaustive
 import io.reactivex.disposables.CompositeDisposable
@@ -25,7 +25,7 @@ class BitCoinPriceGraphViewModel
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
-    private var recentRequestedTimeSpan: TimeSpan = TimeSpan(1, TimeUnit.Week)
+    private var recentRequestedTimeSpan: TimeSpan = TimeSpan(1, TimeSpanUnit.Week)
 
     fun loadBitCoinGraphModelOnLaunch() {
         loadBitCoinGraphModel()
@@ -36,22 +36,22 @@ class BitCoinPriceGraphViewModel
     }
 
     fun onClickOneWeekTimeSpan() {
-        recentRequestedTimeSpan = TimeSpan(1, TimeUnit.Week)
+        recentRequestedTimeSpan = TimeSpan(1, TimeSpanUnit.Week)
         loadBitCoinGraphModel()
     }
 
     fun onClickOneMonthTimeSpan() {
-        recentRequestedTimeSpan = TimeSpan(1, TimeUnit.Months)
+        recentRequestedTimeSpan = TimeSpan(1, TimeSpanUnit.Months)
         loadBitCoinGraphModel()
     }
 
     fun onClickSixMonthTimeSpan() {
-        recentRequestedTimeSpan = TimeSpan(6, TimeUnit.Months)
+        recentRequestedTimeSpan = TimeSpan(6, TimeSpanUnit.Months)
         loadBitCoinGraphModel()
     }
 
     fun onClickOneYearTimeSpan() {
-        recentRequestedTimeSpan = TimeSpan(1, TimeUnit.Year)
+        recentRequestedTimeSpan = TimeSpan(1, TimeSpanUnit.Year)
         loadBitCoinGraphModel(recentRequestedTimeSpan)
     }
 

@@ -47,14 +47,14 @@ class GetBitCoinGraphInfoUseCaseTest : BaseTest() {
 
     @Test
     fun `Validation should pass`() {
-        getBitCoinGraphInfoUseCase.validate(TimeSpan(1, TimeUnit.Week))
+        getBitCoinGraphInfoUseCase.validate(TimeSpan(1, TimeSpanUnit.Week))
             .test()
             .assertComplete()
     }
 
     @Test
     fun `Validation should not pass when time span is negative`() {
-        getBitCoinGraphInfoUseCase.validate(TimeSpan(-1, TimeUnit.Week))
+        getBitCoinGraphInfoUseCase.validate(TimeSpan(-1, TimeSpanUnit.Week))
             .test()
             .assertError(ParamValidationException::class.java)
     }
@@ -76,7 +76,7 @@ class GetBitCoinGraphInfoUseCaseTest : BaseTest() {
         )
         whenever(bitCoinGraphRepository.getGraphInfo(timeSpanStringCaptor.capture()))
             .thenReturn(Single.just(bitCoinGraphInfo))
-        getBitCoinGraphInfoUseCase.buildUseCase(TimeSpan(1, TimeUnit.Week)).test()
+        getBitCoinGraphInfoUseCase.buildUseCase(TimeSpan(1, TimeSpanUnit.Week)).test()
             .assertValue(bitCoinGraphInfo)
         assertEquals(TIME_SPAN_1_WEEK, timeSpanStringCaptor.firstValue)
     }

@@ -26,15 +26,15 @@ class GetBitCoinGraphInfoUseCase
 
     override fun buildUseCase(param: TimeSpan?): Single<BitCoinGraphInfo> =
         param?.let {
-            bitCoinGraphRepository.getGraphInfo("${param.count}${param.timeUnit.key}")
+            bitCoinGraphRepository.getGraphInfo("${param.count}${param.timeSpanUnit.key}")
         } ?: Single.error(NullParamException())
 }
 
-data class TimeSpan(val count: Int, val timeUnit: TimeUnit)
+data class TimeSpan(val count: Int, val timeSpanUnit: TimeSpanUnit)
 
-sealed class TimeUnit(val key: String) {
-    object Day : TimeUnit("days")
-    object Week : TimeUnit("weeks")
-    object Months : TimeUnit("months")
-    object Year : TimeUnit("years")
+sealed class TimeSpanUnit(val key: String) {
+    object Day : TimeSpanUnit("days")
+    object Week : TimeSpanUnit("weeks")
+    object Months : TimeSpanUnit("months")
+    object Year : TimeSpanUnit("years")
 }
