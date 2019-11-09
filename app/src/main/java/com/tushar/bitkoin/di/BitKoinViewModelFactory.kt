@@ -12,7 +12,7 @@ constructor(private val creators: Map<Class<out ViewModel>, @JvmSuppressWildcard
     ViewModelProvider.Factory {
 
     @Throws(RuntimeException::class)
-    @Suppress("UNCHECKED_CAST")
+    @Suppress("UNCHECKED_CAST", "TooGenericExceptionCaught")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         var creator: Provider<out ViewModel>? = creators[modelClass]
         if (creator == null) {
@@ -29,7 +29,9 @@ constructor(private val creators: Map<Class<out ViewModel>, @JvmSuppressWildcard
         try {
             return creator.get() as T
         } catch (e: Exception) {
-            throw RuntimeException("Provided type is not a valid ViewModel $e")
+            throw NotAValidViewModelException()
         }
     }
 }
+
+class NotAValidViewModelException : RuntimeException("Provided type is not a valid ViewModel")
