@@ -1,0 +1,48 @@
+dist: trusty
+language: android
+jdk: oraclejdk8
+
+env:
+  global:
+    - TARGET_VERSION=28
+    - ANDROID_BUILD_TOOLS_VERSION=28.0.3
+
+android:
+  components:
+    - tools
+    - platform-tools
+    - build-tools-$ANDROID_BUILD_TOOLS_VERSION
+    - extra-google-google_play_services
+    - extra-android-support
+    - extra-android-m2repository
+    - android-$TARGET_VERSION
+
+licenses:
+  - '.+'
+
+before_install:
+  - chmod +x gradlew
+  - export ANDROID_HOME=~/android-sdk-linux
+  - wget -q "https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip" -O android-sdk-tools.zip
+  - unzip -q android-sdk-tools.zip -d ${ANDROID_HOME}
+  - rm android-sdk-tools.zip
+  - PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools
+  - yes | sdkmanager --update
+  - yes | sdkmanager --licenses
+  - sdkmanager "emulator" "tools" "platform-tools" > /dev/null
+  - sdkmanager "build-tools;$ANDROID_BUILD_TOOLS_VERSION" "platforms;android-$TARGET_VERSION" > /dev/null
+  - mkdir "$ANDROID_HOME/licenses" || true
+  - cp -R script/google-licenses/* "$ANDROID_HOME/licenses/"
+
+script:
+  - ./gradlew assembleDebug testDebugUnitTest
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/§
+
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+    - $HOME/.android/build-cache
