@@ -41,10 +41,10 @@ before_install:
 before_script:
   - echo "y" | android update sdk -a --no-ui --filter sys-img-armeabi-v7a-android-21,sys-img-x86_64-android-21
   - echo no | android create avd --force -n test -t android-21 --abi default/armeabi-v7a
-  - emulator -avd test -no-skin -no-audio -no-window &
-  - android-wait-for-emulator
-  - adb shell input keyevent 82 &
 
 script:
   - ./gradlew build assembleDebug testDebugUnitTest
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
   - ./gradlew clean build connectedCheck -PdisablePreDex --stacktrace
