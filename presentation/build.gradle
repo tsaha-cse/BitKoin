@@ -6,6 +6,7 @@ plugins {
 }
 apply from: '../buildSrc/dependencies.gradle'
 apply from: "../buildSrc/detekt/detekt.gradle"
+apply from: '../buildSrc/jacoco.gradle'
 
 android {
     compileSdkVersion versions.compileVersion
@@ -23,6 +24,9 @@ android {
     }
 
     buildTypes {
+        debug {
+            testCoverageEnabled = true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'

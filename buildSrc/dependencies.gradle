@@ -89,4 +89,11 @@ project.ext {
             daggerMock      : 'com.github.fabioCollini.daggermock:daggermock:0.8.5',
             daggerMockKotlin: 'com.github.fabioCollini.daggermock:daggermock-kotlin:0.8.5'
     ]
+
+    // Reporting
+    versions.jacoco = '0.8.1'
+    jacoco = "org.jacoco:org.jacoco.core:$versions.jacoco"
+
+    versions.detekt = '1.0.1'
+    detekt = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$versions.detekt"
 }
