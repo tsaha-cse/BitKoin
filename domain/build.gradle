@@ -4,8 +4,6 @@ plugins {
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
 }
-apply from: '../buildSrc/dependencies.gradle'
-apply from: "../buildSrc/detekt/detekt.gradle"
 
 android {
     compileSdkVersion versions.compileVersion

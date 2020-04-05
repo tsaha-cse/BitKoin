@@ -24,10 +24,9 @@ class ClearPreferencesRule : TestRule {
 
             val allPrefs = ArrayList<SharedPreferences>()
             for (prefFileName in children) {
-                val prefName = if (prefFileName.endsWith(".xml"))
+                val prefName = if (prefFileName.endsWith(".xml")) {
                     prefFileName.substring(0, prefFileName.indexOf(".xml"))
-                else
-                    prefFileName
+                } else prefFileName
                 val prefs = context.getSharedPreferences(prefName, 0)
                 allPrefs.add(prefs)
             }

@@ -6,10 +6,10 @@ project.ext {
     versions.targetVersion = 28
     versions.compileVersion = versions.targetVersion
 
-    versions.androidPlugin = '3.5.0'
+    versions.androidPlugin = '3.6.2'
     androidPlugin = "com.android.tools.build:gradle:$versions.androidPlugin"
 
-    versions.kotlin = '1.3.41'
+    versions.kotlin = '1.3.71'
     kotlinDependencies = [
             gradlePlugin: "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin",
             stdLib      : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlin",
@@ -72,6 +72,8 @@ project.ext {
     kotson = 'com.github.salomonbrys.kotson:kotson:2.5.0'
 
     mPAndroidChart = 'com.github.PhilJay:MPAndroidChart:v3.0.2'
+
+    detekt = 'io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.0.1'
 
     testDependencies = [
             junit           : 'junit:junit:4.12',

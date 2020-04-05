@@ -139,7 +139,6 @@ class BitCoinPriceGraphViewModel
                     )
                 )
             }
-
         }.exhaustive
     }
 

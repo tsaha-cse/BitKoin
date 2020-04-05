@@ -38,5 +38,4 @@ class SwipeRefreshControlGestureListener(
     override fun onChartDoubleTapped(me: MotionEvent?) = Unit
 
     override fun onChartTranslate(me: MotionEvent?, dX: Float, dY: Float) = Unit
-
 }

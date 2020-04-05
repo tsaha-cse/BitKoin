@@ -45,7 +45,6 @@ class BitCoinGraphRepositoryImpl(
                 )
             }
 
-
     private fun requestToNetworkSource(timeSpan: String): Single<BitCoinGraphModel> =
         bitCoinGraphNetworkDataSource.getGraphInfo(timeSpan)
             .doOnSuccess { bitCoinGraphModel ->
@@ -67,7 +66,6 @@ class BitCoinGraphRepositoryImpl(
                     else -> Single.error(throwable)
                 }
             }
-
 }
 
 sealed class DataSource {

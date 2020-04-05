@@ -15,6 +15,7 @@ import java.lang.reflect.Type
  * also it can deserialize the json from local source
  */
 class BitCoinGraphInfoDeserializer : JsonDeserializer<BitCoinGraphModel> {
+    @SuppressWarnings("ComplexMethod")
     override fun deserialize(
         json: JsonElement?,
         typeOfT: Type?,
@@ -46,4 +47,3 @@ class BitCoinGraphInfoDeserializer : JsonDeserializer<BitCoinGraphModel> {
             )
         } ?: throw JsonParseException("Invalid JSON")
 }
-

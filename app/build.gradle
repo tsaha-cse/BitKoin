@@ -5,9 +5,6 @@ plugins {
     id 'kotlin-kapt'
 }
 
-apply from: "../buildSrc/detekt/detekt.gradle"
-apply from: '../buildSrc/dependencies.gradle'
-
 android {
     compileSdkVersion versions.compileVersion
     buildToolsVersion versions.buildToolsVersion

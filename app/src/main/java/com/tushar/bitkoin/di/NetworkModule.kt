@@ -96,5 +96,4 @@ class NetworkModule {
         bitCoinGraphLocalStorage: BitCoinGraphLocalStorage
     ): BitCoinGraphRepository =
         BitCoinGraphRepositoryImpl(bitCoinGraphNetworkDataSource, bitCoinGraphLocalStorage)
-
 }

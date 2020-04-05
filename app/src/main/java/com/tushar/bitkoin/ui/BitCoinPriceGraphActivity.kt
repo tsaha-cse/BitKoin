@@ -34,7 +34,6 @@ import kotlinx.android.synthetic.main.layout_graph.chart
 import kotlinx.android.synthetic.main.layout_graph.timeSpanOptionGroup
 import javax.inject.Inject
 
-
 class BitCoinPriceGraphActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
@@ -66,7 +65,6 @@ class BitCoinPriceGraphActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshLi
             bitCoinPriceGraphViewModel.onClickOneYearTimeSpan()
         }
     }
-
 
     private fun setupViewModel() {
         bitCoinPriceGraphViewModel =

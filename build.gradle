@@ -11,11 +11,14 @@ buildscript {
         classpath androidPlugin
         classpath kotlinDependencies.gradlePlugin
         classpath kotlinDependencies.allOpen
-        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.0.1"
+        classpath detekt
     }
 }
 
 allprojects {
+    apply from: "${project.rootDir}/buildSrc/detekt/detekt.gradle"
+    apply from: "${project.rootDir}/buildSrc/dependencies.gradle"
+
     repositories {
         google()
         jcenter()
